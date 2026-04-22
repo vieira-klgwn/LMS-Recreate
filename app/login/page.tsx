@@ -24,31 +24,38 @@ const LoginPage = () => {
         }
      }
   return (
-    <div>
-        <h1 className='text-lg font-bold '>Login</h1>
+    <div className='flex items-center justify-center min-h-screen p-4 '>
+    <div className=' items-center justify-center gap-6 bg-amber-100 w-full max-w-md rounded-2xl shadow-lg p-8'>
+        <h1 className='text-3xl font-bold text-red-800 font-extrabold w-full mx-auto'>Login</h1>
         {error && <p className='text-red-500'>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
+      <form className='flex flex-col gap-8 m-8' onSubmit={handleSubmit}>
+        
+            
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            className='w-full text-gray-500 border-amber-500 border-1 rounded-lg p-2'
+            placeholder='Username'
+          
           />
-        </div>
-        <div>
-          <label>Password:</label>
+
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className='w-full text-gray-500 border-amber-500 border-1 rounded-lg p-2'
+            placeholder='Password'
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p>Don't have an account? <a href="/signup">Sign up</a></p>
 
-    </div>
+        <button className='text-red-900 font-bold bg-amber-600 hover:bg-amber-700 rounded-4xl' type="submit">Login</button>
+        
+      </form>
+      <p className='text-red-900'>Don't have an account? <a className='text-red-950 font-bold ' href="/signup">Sign up</a></p>
+
+      
+
+    </div></div>
   )
     
 

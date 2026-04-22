@@ -10,6 +10,7 @@ interface AuthContextType  {
     login: (username:string,password:string) => Promise<void>;
     signup: (username:string,password:string, role:string) => Promise<void>;
     logout: () => void;
+    loading: boolean;
 }
 
 
@@ -20,7 +21,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<{userId: string, username: string, role: string} | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const router = useRouter();
-    
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
     
         const storedToken = localStorage.getItem('token');
@@ -40,7 +42,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error('Error fetching user data:', error);
                 localStorage.removeItem('token');
                 setToken(null);
-            });
+            })
+            .finally(() => setLoading(false));
+        }
+        else{
+            setLoading(false);
         }
     },[])
 
@@ -78,7 +84,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, token, login, signup, logout }}>
+        <AuthContext.Provider value={{ user, token, login, signup, logout,loading }}>
             {children}
         </AuthContext.Provider>
     );
