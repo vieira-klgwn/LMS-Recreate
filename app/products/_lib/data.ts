@@ -19,6 +19,12 @@ const products = [
     description: 'This is product 3',
     price: 30,
   },
+  {
+    id: 4,
+    name: 'Product 4',
+    description: 'This is product 4',
+    price: 40,
+  }
 ] 
 
 export default products;
