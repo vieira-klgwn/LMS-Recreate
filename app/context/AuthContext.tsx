@@ -1,5 +1,5 @@
 'use client'
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (storedToken) {
             setToken(storedToken);
-            axios.get('http://localhost:5000/user', {
+            axios.get('http://127.0.0.0:3000/auth/profile', {
                 headers: {
                     Authorization: `Bearer ${storedToken}`
                 }
@@ -52,26 +52,60 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const login = async (username:string,password:string) => {
         try {
-            const res = await axios.post('http://localhost:5000/login', { username, password });
+            const res = await axios.post('http://127.0.0.0:3000/auth/login', { username, password });
             setToken(res.data.token);
             setUser(res.data.user);
             localStorage.setItem('token', res.data.token);
             router.push('/products');
         } catch (error) {
-            console.error('Login error:', error);
-            throw error;
+            if (axios.isAxiosError(error)) {
+
+                console.error('LOGIN AXIOS ERROR');
+
+                console.error('Message:', error.message);
+
+                console.error('Status:', error.response?.status);
+
+                console.error('Data:', error.response?.data);
+
+                console.error('Headers:', error.response?.headers);
+
+           } else {
+
+                console.error('UNKNOWN LOGIN ERROR:', error);
+
+            }
+
+            throw error;    
         }
     }
     
     const signup = async (username:string,password:string, role:string) => {
         try {
-            const res = await axios.post('http://localhost:5000/signup', { username, password, role });
+            const res = await axios.post('http://127.0.0.0:3000/auth/register', { username, password, role });
             setToken(res.data.token);
             setUser(res.data.user);
             localStorage.setItem('token', res.data.token);
             router.push('/products');
         } catch (error) {
-            console.error('Signup error:', error);
+            if (axios.isAxiosError(error)) {
+
+                console.error('SIGNUP AXIOS ERROR');
+
+                console.error('Message:', error.message);
+
+                console.error('Status:', error.response?.status);
+
+                console.error('Data:', error.response?.data);
+
+                console.error('Headers:', error.response?.headers);
+
+           } else {
+
+                console.error('UNKNOWN SIGNUP ERROR:', error);
+
+            }
+
             throw error;
         }
     }

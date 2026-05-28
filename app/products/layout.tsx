@@ -16,3 +16,4 @@ const layout = ({children, modal}) => {
 }
 
 export default layout
+
