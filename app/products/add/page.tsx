@@ -11,7 +11,7 @@ const AddProductPage = () => {
   
   const createProduct = async (product: { name: string; price: string }) => {
     try {
-      const response = await fetch('http://127.0.0.0:3000/product', {
+      const response = await fetch('http://127.0.0.1:3000/product', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

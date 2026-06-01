@@ -29,7 +29,7 @@ function ProductsPage() {
         
         try {
 
-            const productsResponse = await fetch('http://127.0.0.0:3000/product', {
+            const productsResponse = await fetch('http://127.0.0.1:3000/product', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
